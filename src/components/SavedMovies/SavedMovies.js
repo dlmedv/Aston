@@ -9,7 +9,7 @@ function SavedMovies() {
       <main>
         <section className="movies">
           <SearchForm />
-          <MoviesCardList />
+          <MoviesCardList  isSavedMoviesPage={true}/>
         </section>
       </main>
       <Footer />

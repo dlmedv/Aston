@@ -1,14 +1,6 @@
 import "./MoviesCard.css";
-import photo from "../../images/zaglush.jpeg";
 
-function MoviesCard() {
-  const movie = {
-    nameRU: "Роллинг Стоунз» в изгнании",
-    duration: 61,
-    trailerLink: "https://www.youtube.com/watch?v=UXcqcdYABFw",
-    image: photo,
-  };
-
+function MoviesCard({ movie, isSavedMoviesPage }) {
   return (
     <li className="movies-card">
       <div className="movies-card__info">
@@ -17,10 +9,17 @@ function MoviesCard() {
           {Math.floor(movie.duration / 60)}ч{" "}
           {movie.duration - 60 * Math.floor(movie.duration / 60)}м
         </p>
-        <button
-          className="movies-card__button movies-card__button_active"
-          type="button"
-        ></button>
+        {isSavedMoviesPage ? (
+          <button
+            className="movies-card__button movies-card__button_delete"
+            type="button"
+          ></button>
+        ) : (
+          <button
+            className={"movies-card__button movies-card__button_active"}
+            type="button"
+          ></button>
+        )}
       </div>
       <a
         href={movie.trailerLink}
@@ -30,7 +29,11 @@ function MoviesCard() {
       >
         <img
           className="movies-card__poster"
-          src={movie.image}
+          src={
+            movie.image.url
+              ? `https://api.nomoreparties.co/${movie.image.url}`
+              : movie.image
+          }
           alt={`Постер ${movie.nameRU}`}
         />
       </a>
