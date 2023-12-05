@@ -39,10 +39,6 @@
     transition: border-bottom 0.4s ease-out;
 }
 
-.profile__form-row:hover {
-    border-bottom: 1px solid #aaa9a9;
-}
-
 .profile__buttons {
     margin: 188px 0 0 0;
     display: flex;
@@ -71,12 +67,6 @@
     opacity: 0.7;
 }
 
-.profile__button_disabled:disabled {
-    opacity: 0.5;
-    cursor: default;
-    pointer-events: none;
-}
-
 .profile__button_red {
     color: #EE3465;
 }
@@ -89,7 +79,7 @@
     line-height: normal;
 }
 
-.profile__input {
+.profile__email {
     color: #FFF;
     margin: 0;
     padding: 0;
