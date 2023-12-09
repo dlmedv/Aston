@@ -54,11 +54,11 @@
 }
 
 .header__link_gray {
-    transition: font-weight .1s ease-out;
+    transition: opacity .3s ease-out;
 }
 
 .header__link_gray:hover {
-    font-weight: 500;
+    opacity: 0.7;
 }
 
 .header__link_mobile {
