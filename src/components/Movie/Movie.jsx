@@ -41,11 +41,11 @@ function Movie() {
               <li className="movie__item">Режиссер: {film.director}</li>
               <li className="movie__item">Год производства: {film.year}</li>
               <li className="movie__item">Время: {film.duration}мин</li>
-              <li className="movie__item"></li>
             </ul>
           </div>
         </div>
         <p className="movie__description">{film.description}</p>
+        <button className="movie__button">Сохранить фильм</button>
       </div>
       <Footer />
     </>
