@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router";
 import "./MoviesCard.css";
 
 function MoviesCard({ movie, isSavedMoviesPage }) {
+  const navigate = useNavigate();
+
+  function clickMore() {
+    navigate(`/movies/${movie.id}`);
+  }
+
   return (
     <li className="movies-card">
       <div className="movies-card__info">
@@ -20,6 +27,9 @@ function MoviesCard({ movie, isSavedMoviesPage }) {
             type="button"
           ></button>
         )}
+        <button className="movies-card__more" type="button" onClick={clickMore}>
+          Подробнее...
+        </button>
       </div>
       <a
         href={movie.trailerLink}

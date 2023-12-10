@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   films: [],
+  searchFilms: [],
 };
 
 export const filmSlice = createSlice({
@@ -9,11 +10,23 @@ export const filmSlice = createSlice({
   initialState,
   reducers: {
     getFilms: (state, action) => {
-      // action.payload - параметр переданный в метод
-      return { ...state, films : action.payload };
+      return { ...state, films: action.payload };
+    },
+    searchFilm: (state, action) => {
+      return {
+        ...state,
+        searchFilms: state.films.filter(
+          (item) =>
+            item.nameRU.toLowerCase().includes(action.payload.toLowerCase()) ||
+            item.nameEN.toLowerCase().includes(action.payload.toLowerCase())
+        ),
+      };
+    },
+    nullSearchFilm: (state) => {
+      return { ...state, searchFilms: [] };
     },
   },
 });
 
 export default filmSlice.reducer;
-export const { getFilms } = filmSlice.actions;
+export const { getFilms, searchFilm, nullSearchFilm } = filmSlice.actions;
