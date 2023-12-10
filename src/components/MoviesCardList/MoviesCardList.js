@@ -16,7 +16,7 @@ function MoviesCardList({ isSavedMoviesPage }) {
       <ul className="movies-list__wrapper">
         {films.map((movie) => (
           <MoviesCard
-            key={movie.id}
+            key={movie.id || movie._id}
             movie={movie}
             isSavedMoviesPage={isSavedMoviesPage}
           />

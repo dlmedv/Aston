@@ -10,20 +10,17 @@ export const filmSlice = createSlice({
   initialState,
   reducers: {
     getFilms: (state, action) => {
-      return { ...state, films: action.payload };
+      state.films = action.payload;
     },
     searchFilm: (state, action) => {
-      return {
-        ...state,
-        searchFilms: state.films.filter(
-          (item) =>
-            item.nameRU.toLowerCase().includes(action.payload.toLowerCase()) ||
-            item.nameEN.toLowerCase().includes(action.payload.toLowerCase())
-        ),
-      };
+      state.searchFilms = state.films.filter(
+        (item) =>
+          item.nameRU.toLowerCase().includes(action.payload.toLowerCase()) ||
+          item.nameEN.toLowerCase().includes(action.payload.toLowerCase())
+      );
     },
     nullSearchFilm: (state) => {
-      return { ...state, searchFilms: [] };
+      state.searchFilms = [];
     },
   },
 });
