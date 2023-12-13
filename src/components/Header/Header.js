@@ -2,17 +2,19 @@ import { Route, Routes, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
+import { useGetMoviesQuery } from "../../utils/store/query/movies";
 import { getFilms } from "../../utils/store/slices/filmslice";
-import { moviesApi } from "../../utils/MoviesApi/MoviesApi";
 import "./Header.css";
 import logo from "../../images/logo.svg";
 
 function Header({ loggedIn }) {
   const dispatch = useDispatch();
-
+  const { data, error, isLoading } = useGetMoviesQuery();
   useEffect(() => {
-    moviesApi.getFilms().then((films) => dispatch(getFilms(films)));
-  }, []);
+    if (!error && !isLoading) {
+      dispatch(getFilms(data));
+    }
+  }, [data]);
 
   return (
     <Routes>
