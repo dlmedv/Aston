@@ -1,13 +1,47 @@
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+import { useRegistryMutation } from "../../utils/store/query/user";
+import useForm from "../hooks/useForm";
 import logo from "../../images/logo.svg";
+import { patternEmail } from "../../utils/const/const";
 
 function Register() {
+  const [registry, { error, isError }] = useRegistryMutation();
   const [buttonStatus, setButtonStatus] = useState(false);
+  const { form, errors, handleChange, clearError } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
+  // const navigate = useNavigate();
 
+  useEffect(() => {
+    clearError();
+  }, []);
+
+  useEffect(() => {
+    const err =
+      errors.name === "" && errors.email === "" && errors.password === "";
+    setButtonStatus(err);
+  }, [errors]);
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    try {
+      await registry({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      });
+      // navigate("/signin");
+      clearError();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <main>
@@ -16,7 +50,7 @@ function Register() {
           <img className="auth__logo" src={logo} alt="логотип" />
         </Link>
         <h1 className="auth__title">Добро пожаловать!</h1>
-        <form className="auth__form" noValidate>
+        <form className="auth__form" onSubmit={handleSubmit} noValidate>
           <div className="auth__form-wrapper">
             <label className="auth__form-label">Имя</label>
             <input
@@ -27,10 +61,12 @@ function Register() {
               placeholder="Введите ваше имя"
               minLength="2"
               maxLength="30"
+              value={form.name}
+              onChange={handleChange}
               required
             />
           </div>
-          <span className="auth__form-error">ошибка</span>
+          <span className="auth__form-error">{errors.name}</span>
           <div className="auth__form-wrapper">
             <label className="auth__form-label">E-mail</label>
             <input
@@ -40,11 +76,14 @@ function Register() {
               name="email"
               minLength="5"
               maxLength="30"
+              pattern={patternEmail}
               required
+              value={form.email}
+              onChange={handleChange}
               placeholder="Введите ваш e-mail"
             />
           </div>
-          <span className="auth__form-error">ошибка</span>
+          <span className="auth__form-error">{errors.email}</span>
           <div className="auth__form-wrapper">
             <label className="auth__form-label">Пароль</label>
             <input
@@ -54,12 +93,16 @@ function Register() {
               name="password"
               minLength="8"
               maxLength="30"
+              value={form.password}
+              onChange={handleChange}
+              autoComplete="on"
               required
               placeholder="Введите ваш пароль"
             />
           </div>
-          <span className="auth__form-error">ошибка</span>
+          <span className="auth__form-error">{errors.password}</span>
           <span className="auth__form-error auth__form-error_reg">
+            {isError ? error.data.message : ""}
           </span>
           <button
             className={

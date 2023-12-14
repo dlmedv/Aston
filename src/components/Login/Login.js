@@ -1,15 +1,33 @@
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-import { useState } from "react";
-
+import useForm from "../hooks/useForm";
 import logo from "../../images/logo.svg";
-
+import { patternEmail } from "../../utils/const/const";
 
 function Login() {
   const [buttonStatus, setButtonStatus] = useState(false);
 
-  
+  const { form, errors, handleChange, clearError } = useForm({
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    clearError();
+  }, []);
+
+  useEffect(() => {
+    const err = errors.email === "" && errors.password === "";
+    setButtonStatus(err);
+  }, [errors]);
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    clearError();
+  };
+
   return (
     <main>
       <section className="auth">
@@ -17,7 +35,7 @@ function Login() {
           <img className="auth__logo" src={logo} alt="логотип" />
         </Link>
         <h1 className="auth__title">Рады видеть!</h1>
-        <form className="auth__form" noValidate>
+        <form className="auth__form" onSubmit={handleSubmit} noValidate>
           <div className="auth__form-wrapper">
             <label className="auth__form-label">E-mail</label>
             <input
@@ -25,12 +43,15 @@ function Login() {
               type="email"
               minLength="5"
               maxLength="30"
+              pattern={patternEmail}
               required
               name="email"
               placeholder="Введите ваш e-mail"
+              value={form.email}
+              onChange={handleChange}
             />
           </div>
-          <span className="auth__form-error">ошибка</span>
+          <span className="auth__form-error">{errors.email}</span>
           <div className="auth__form-wrapper">
             <label className="auth__form-label">Пароль</label>
             <input
@@ -42,11 +63,12 @@ function Login() {
               name="password"
               placeholder="Введите ваш пароль"
               autoComplete="on"
+              value={form.password}
+              onChange={handleChange}
             />
           </div>
-          <span className="auth__form-error">ошибка</span>
-          <span className="auth__form-error auth__form-error_log">
-          </span>
+          <span className="auth__form-error">{errors.password}</span>
+          <span className="auth__form-error auth__form-error_log"></span>
           <button
             className={
               buttonStatus
