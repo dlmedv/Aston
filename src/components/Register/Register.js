@@ -16,7 +16,7 @@ function Register() {
     email: "",
     password: "",
   });
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     clearError();
@@ -36,7 +36,7 @@ function Register() {
         email: form.email,
         password: form.password,
       });
-      // navigate("/signin");
+      navigate("/signin");
       clearError();
     } catch (err) {
       console.log(err);

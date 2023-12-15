@@ -13,6 +13,26 @@ export const userApi = createApi({
         body: req,
       }),
     }),
+    authorize: builder.mutation({
+      query: (req) => ({
+        url: "/signin",
+        method: "POST",
+        body: req,
+      }),
+    }),
+    getDataUser: builder.query({
+      query: (req) => ({
+        url: "/users/me",
+        method: "GET",
+        headers: {
+          authorization: "Bearer " + JSON.parse(localStorage.getItem("jwt")),
+        },
+      }),
+    }),
   }),
 });
-export const { useRegistryMutation } = userApi;
+export const {
+  useRegistryMutation,
+  useAuthorizeMutation,
+  useGetDataUserQuery,
+} = userApi;
