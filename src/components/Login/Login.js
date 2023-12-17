@@ -1,14 +1,16 @@
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { useAuthorizeMutation } from "../../utils/store/query/user";
 import useForm from "../hooks/useForm";
 import logo from "../../images/logo.svg";
 import { patternEmail } from "../../utils/const/const";
 
 function Login() {
   const [buttonStatus, setButtonStatus] = useState(false);
-
+  const [authorize, { isError, error }] = useAuthorizeMutation();
+  const navigate = useNavigate();
   const { form, errors, handleChange, clearError } = useForm({
     email: "",
     password: "",
@@ -23,9 +25,19 @@ function Login() {
     setButtonStatus(err);
   }, [errors]);
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-    clearError();
+    try {
+      const { data } = await authorize({
+        email: form.email,
+        password: form.password,
+      });
+      clearError();
+      localStorage.setItem("jwt", JSON.stringify(data.token));
+      navigate("/movies");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -68,7 +80,9 @@ function Login() {
             />
           </div>
           <span className="auth__form-error">{errors.password}</span>
-          <span className="auth__form-error auth__form-error_log"></span>
+          <span className="auth__form-error auth__form-error_log">
+            {isError ? error.data.message : ""}
+          </span>
           <button
             className={
               buttonStatus
