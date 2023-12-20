@@ -1,15 +1,18 @@
+import "./Header.css";
 import { Route, Routes, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { useGetMoviesQuery } from "../../utils/store/query/movies";
 import { getFilms } from "../../utils/store/slices/filmslice";
-import "./Header.css";
 import logo from "../../images/logo.svg";
 
-function Header({ loggedIn }) {
+function Header() {
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetMoviesQuery();
+
+  const loggetIn = useSelector((state) => state.userSlice.loggetIn);
+
   useEffect(() => {
     if (!error && !isLoading) {
       dispatch(getFilms(data));
@@ -25,7 +28,7 @@ function Header({ loggedIn }) {
             <Link to="/">
               <img className="header__logo" src={logo} alt="логотип" />
             </Link>
-            {loggedIn ? (
+            {loggetIn ? (
               <nav className="header__info">
                 <Link to="/movies" className="header__link header__link_gray">
                   Фильмы

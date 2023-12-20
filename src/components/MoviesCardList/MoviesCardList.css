@@ -1,6 +1,7 @@
 .movies-list {
     padding: 70px 70px 80px 70px;
     max-width: 1140px;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
     row-gap: 50px;

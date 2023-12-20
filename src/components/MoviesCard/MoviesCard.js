@@ -1,11 +1,62 @@
 import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import "./MoviesCard.css";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getSavedFilms } from "../../utils/store/slices/userslice";
+import {
+  useSavedMoviesMutation,
+  useDeleteMoviesMutation,
+} from "../../utils/store/query/user";
 
 function MoviesCard({ movie, isSavedMoviesPage }) {
   const navigate = useNavigate();
+  const [saveMovie] = useSavedMoviesMutation();
+  const [deleteMovie] = useDeleteMoviesMutation();
+  const user = useSelector((state) => state.userSlice);
+  const films = useSelector((state) => state.userSlice.savedFilms);
+  const dispatch = useDispatch();
+  const [isSaved, setIsSaved] = useState(true);
 
   function clickMore() {
-    navigate(`/movies/${movie.id}`);
+    navigate(`/movies/${isSavedMoviesPage ? movie.movieId : movie.id}`);
+  }
+  useEffect(() => {
+    const bool = films.some(
+      (item) => item.movieId == movie.id || item.id == movie.id
+    );
+    setIsSaved(bool);
+  }, []);
+
+  function handleSave() {
+    try {
+      if (isSaved) {
+        deleteMovie({ id: movie.id }).then(() => {
+          dispatch(getSavedFilms(films.filter((item) => item.id != movie.id)));
+        });
+      } else {
+        saveMovie(movie).then(() => {
+          dispatch(getSavedFilms([...films, movie]));
+        });
+      }
+      setIsSaved(!isSaved);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleDelete() {
+    try {
+      await deleteMovie({ id: movie.movieId });
+      dispatch(
+        getSavedFilms(
+          user.savedFilms.filter((item) => item.movieId !== movie.movieId)
+        )
+      );
+      setIsSaved(false);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -18,12 +69,16 @@ function MoviesCard({ movie, isSavedMoviesPage }) {
         </p>
         {isSavedMoviesPage ? (
           <button
+            onClick={handleDelete}
             className="movies-card__button movies-card__button_delete"
             type="button"
           ></button>
         ) : (
           <button
-            className={"movies-card__button movies-card__button_active"}
+            onClick={handleSave}
+            className={`movies-card__button ${
+              isSaved ? "movies-card__button_active" : ""
+            }`}
             type="button"
           ></button>
         )}
