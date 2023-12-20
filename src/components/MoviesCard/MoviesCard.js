@@ -4,7 +4,6 @@ import "./MoviesCard.css";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getSavedFilms } from "../../utils/store/slices/userslice";
-
 import {
   useSavedMoviesMutation,
   useDeleteMoviesMutation,
@@ -14,30 +13,31 @@ function MoviesCard({ movie, isSavedMoviesPage }) {
   const navigate = useNavigate();
   const [saveMovie] = useSavedMoviesMutation();
   const [deleteMovie] = useDeleteMoviesMutation();
-  const [isSaved, setIsSaved] = useState(false);
   const user = useSelector((state) => state.userSlice);
+  const films = useSelector((state) => state.userSlice.savedFilms);
   const dispatch = useDispatch();
+  const [isSaved, setIsSaved] = useState(true);
 
   function clickMore() {
     navigate(`/movies/${isSavedMoviesPage ? movie.movieId : movie.id}`);
   }
-
   useEffect(() => {
-    setIsSaved(!!user.savedFilms.find((item) => item.movieId === movie.id));
+    const bool = films.some(
+      (item) => item.movieId == movie.id || item.id == movie.id
+    );
+    setIsSaved(bool);
   }, []);
 
-  async function handleSave() {
+  function handleSave() {
     try {
       if (isSaved) {
-        await deleteMovie({ id: movie.id });
-        dispatch(
-          getSavedFilms(
-            user.savedFilms.filter((item) => item.movieId !== movie.movieId)
-          )
-        );
+        deleteMovie({ id: movie.id }).then(() => {
+          dispatch(getSavedFilms(films.filter((item) => item.id != movie.id)));
+        });
       } else {
-        await saveMovie(movie);
-        dispatch(getSavedFilms(user.savedFilms.concat(movie)));
+        saveMovie(movie).then(() => {
+          dispatch(getSavedFilms([...films, movie]));
+        });
       }
       setIsSaved(!isSaved);
     } catch (error) {

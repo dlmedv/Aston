@@ -23,7 +23,6 @@ function MoviesCardList({ isSavedMoviesPage }) {
       dispatch(getSavedFilms(data));
     }
   }, [data]);
-
   if (!films.length) {
     return <Preloader />;
   }

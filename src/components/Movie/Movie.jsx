@@ -18,23 +18,24 @@ function Movie() {
   const dispatch = useDispatch();
   const [addFilm, setAddFilm] = useState(true);
 
-  async function actionSavedFilms() {
-    await saveMovie(film);
-    dispatch(getSavedFilms(user.savedFilms.concat(film)));
-    setAddFilm(false);
+  function actionSavedFilms() {
+    saveMovie(film).then(() => {
+      dispatch(getSavedFilms(user.savedFilms.concat(film)));
+      setAddFilm(false);
+    });
   }
 
   useEffect(() => {
     if (films.length > 0) {
       setFilm(films.find((item) => item.id == params.id));
     }
-  }, []);
+  }, [films]);
 
   useEffect(() => {
     if (film && user.savedFilms) {
-      setAddFilm(!user.savedFilms.find((item) => item.movieId === film.id));
+      setAddFilm(!user.savedFilms.find((item) => item.id === film.id));
     }
-  }, []);
+  }, [film]);
 
   if (!films.length) {
     return <Preloader />;

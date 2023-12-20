@@ -11,6 +11,7 @@ export const filmSlice = createSlice({
   initialState,
   reducers: {
     getFilms: (state, action) => {
+      localStorage.setItem("films", JSON.stringify(action.payload));
       state.films = action.payload;
     },
     searchFilm: (state, action) => {
