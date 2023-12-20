@@ -31,13 +31,13 @@ function History() {
         <ul className="history__items">
           {searchFilms.map((film, index) => (
             <li className="history__item" key={index}>
-              <a
+              <div
                 onClick={() => setSearch(film)}
-                href=" "
+                type="button"
                 className="history__name"
               >
                 {film}
-              </a>
+              </div>
               <button
                 onClick={() => delHistory(film)}
                 className="history__delete"

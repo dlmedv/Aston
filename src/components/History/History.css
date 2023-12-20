@@ -41,6 +41,8 @@
 }
 
 .history__name {
+  padding: 0;
+  margin: 0;
   text-decoration: none;
   max-width: 50%;
   color: #883278;
