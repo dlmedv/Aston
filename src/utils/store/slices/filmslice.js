@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  films: [],
+  films: JSON.parse(localStorage.getItem("films")) || [],
   searchFilms: [],
+  searchStr: JSON.parse(localStorage.getItem("search")) || [],
 };
 
 export const filmSlice = createSlice({
@@ -13,6 +14,7 @@ export const filmSlice = createSlice({
       state.films = action.payload;
     },
     searchFilm: (state, action) => {
+      localStorage.setItem("search", JSON.stringify(action.payload));
       state.searchFilms = state.films.filter(
         (item) =>
           item.nameRU.toLowerCase().includes(action.payload.toLowerCase()) ||
@@ -22,8 +24,12 @@ export const filmSlice = createSlice({
     nullSearchFilm: (state) => {
       state.searchFilms = [];
     },
+    setSearchStr: (state, action) => {
+      state.searchStr = action.payload;
+    },
   },
 });
 
 export default filmSlice.reducer;
-export const { getFilms, searchFilm, nullSearchFilm } = filmSlice.actions;
+export const { getFilms, searchFilm, nullSearchFilm, setSearchStr } =
+  filmSlice.actions;

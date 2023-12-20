@@ -7,9 +7,10 @@ import "./SearchForm.css";
 
 function SearchForm() {
   const [activeFilm, setActiveFilm] = useState({});
-  const [input, setInput] = useState("");
   const [errMessage, setErrMesage] = useState(false);
   const films = useSelector((state) => state.filmSlice.films);
+  const searchStr = useSelector((state) => state.filmSlice.searchStr);
+  const [input, setInput] = useState(searchStr);
   const searchFilms = useSelector((state) => state.filmSlice.searchFilms);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,6 +20,10 @@ function SearchForm() {
       setErrMesage(true);
     }
   }, [activeFilm]);
+
+  useEffect(() => {
+    input.length > 0 ? dispatch(searchFilm(input)) : dispatch(nullSearchFilm());
+  }, [input]);
 
   function inputChange(e) {
     setInput(e.target.value);
@@ -41,11 +46,14 @@ function SearchForm() {
         item.nameRU.toLowerCase() === input.toLowerCase()
     );
     setActiveFilm(find ? find : {});
-
+    const arrSearch = JSON.parse(localStorage.getItem("searchedFilms")) || [];
+    arrSearch.push(input.split(" // ")[0]);
+    localStorage.setItem("searchedFilms", JSON.stringify(arrSearch));
     if (!errMessage) {
-      navigate(`/movies/${activeFilm.id}`); // навигация на страницу фильма
+      navigate(`/movies/${activeFilm.id}`);
     }
   }
+
   return (
     <div className="search-form">
       <form className="search-form__form" onSubmit={search} noValidate>
@@ -61,7 +69,6 @@ function SearchForm() {
           Найти
         </button>
       </form>
-      {/* {errMessage && <div className="search-form__error">Фильм не найден.</div>} */}
       <div className="search-form__items">
         {searchFilms.map((item) => (
           <div

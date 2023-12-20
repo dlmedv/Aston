@@ -37,7 +37,6 @@ function Register() {
         password: form.password,
       });
       navigate("/signin");
-      clearError();
     } catch (err) {
       console.log(err);
     }

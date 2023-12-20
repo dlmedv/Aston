@@ -1,16 +1,21 @@
 import "./Login.css";
+import "../Register/Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { useAuthorizeMutation } from "../../utils/store/query/user";
 import useForm from "../hooks/useForm";
 import logo from "../../images/logo.svg";
 import { patternEmail } from "../../utils/const/const";
+import { setLoggetIn } from "../../utils/store/slices/userslice";
+import { setCookie } from "../../utils/store/cookie/cookie";
 
 function Login() {
   const [buttonStatus, setButtonStatus] = useState(false);
   const [authorize, { isError, error }] = useAuthorizeMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { form, errors, handleChange, clearError } = useForm({
     email: "",
     password: "",
@@ -33,7 +38,8 @@ function Login() {
         password: form.password,
       });
       clearError();
-      localStorage.setItem("jwt", JSON.stringify(data.token));
+      dispatch(setLoggetIn());
+      setCookie("jwt", data.token, { expires: 7 });
       navigate("/movies");
     } catch (err) {
       console.log(err);
