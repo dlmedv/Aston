@@ -32,6 +32,7 @@
   font-weight: 500;
   line-height: normal;
   background-color: transparent;
+  text-overflow: ellipsis
 }
 
 .search-form__button {

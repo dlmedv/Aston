@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 import { searchFilm, nullSearchFilm } from "../../utils/store/slices/filmslice";
+import { useDebounce } from "../hooks/useDebounce";
 import "./SearchForm.css";
 
 function SearchForm() {
@@ -14,6 +15,7 @@ function SearchForm() {
   const searchFilms = useSelector((state) => state.filmSlice.searchFilms);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const debouncedInput = useDebounce(input, 500);
 
   useEffect(() => {
     if (Object.entries(activeFilm).length === 0) {
@@ -22,8 +24,10 @@ function SearchForm() {
   }, [activeFilm]);
 
   useEffect(() => {
-    input.length > 0 ? dispatch(searchFilm(input)) : dispatch(nullSearchFilm());
-  }, [input]);
+    input.length > 0
+      ? dispatch(searchFilm(debouncedInput))
+      : dispatch(nullSearchFilm());
+  }, [debouncedInput]);
 
   function inputChange(e) {
     setInput(e.target.value);

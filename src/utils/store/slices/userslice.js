@@ -33,9 +33,8 @@ export const userSlice = createSlice({
       state.loggetIn = !state.loggetIn;
     },
     getSavedFilms: (state, action) => {
-      // console.log(action.payload);
       localStorage.setItem("savedFilms", JSON.stringify(action.payload));
-      return {...state, savedFilms : action.payload};
+      state.savedFilms = action.payload;
     },
   },
 });

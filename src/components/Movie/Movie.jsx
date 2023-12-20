@@ -16,12 +16,12 @@ function Movie() {
   const [film, setFilm] = useState({ image: "", nameRU: "" });
   const user = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
-  const [addFilm, setAddFilm] = useState(true);
+  const [isAddFilm, setIsAddFilm] = useState(true);
 
   function actionSavedFilms() {
     saveMovie(film).then(() => {
       dispatch(getSavedFilms(user.savedFilms.concat(film)));
-      setAddFilm(false);
+      setIsAddFilm(false);
     });
   }
 
@@ -33,7 +33,7 @@ function Movie() {
 
   useEffect(() => {
     if (film && user.savedFilms) {
-      setAddFilm(!user.savedFilms.find((item) => item.id === film.id));
+      setIsAddFilm(!user.savedFilms.find((item) => item.id === film.id));
     }
   }, [film]);
 
@@ -64,7 +64,7 @@ function Movie() {
             </div>
           </div>
           <p className="movie__description">{film.description}</p>
-          {addFilm ? (
+          {isAddFilm ? (
             <button onClick={actionSavedFilms} className="movie__button">
               Сохранить фильм
             </button>

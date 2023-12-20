@@ -39,6 +39,9 @@ export const userApi = createApi({
           authorization: "Bearer " + getCookie("jwt"),
         },
       }),
+      transformResponse: (response) => {
+        return response.data;
+      },
     }),
     savedMovies: builder.mutation({
       query: (req) => ({
