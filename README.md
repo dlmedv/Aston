@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# aston-project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Actions](https://github.com/Ewok1ng/aston-project/actions/workflows/actions.yml/badge.svg)](https://github.com/dlmedv/aston/actions)
+- Movies - приложение для поиска и просмотра фильмов.
+- Использованное API: [Beatfilm-movies](https://api.nomoreparties.co/beatfilm-movies").
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Основной функционал
 
-### `npm start`
+- Регистрация и авторизация пользователей;
+- Страница с информацией о пользователе;
+- Сохраненные фильмы: пользователь может добавлять или удалять из списка сохраненных;
+- Поиск по названию фильма, выпадающее меню из фильмов;
+- История поиска: сохранение названия фильма, возможность перейти на страницу поиска после нажатия на название фильма.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Реализация требований
 
-### `npm test`
+### 1 уровень (обязательный - необходимый минимум)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [x] Реализованы Требования к функциональности.
 
-### `npm run build`
+#### React
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [x] Пишем функциональные компоненты c хуками: [components](src/components).
+- [x] Есть разделение на [умные](src/components/MoviesCardList/MoviesCardList.js) и [глупые](src/components/Promo/Promo.js) компоненты.
+- [x] Есть рендеринг [списков](src/components/MoviesCardList/MoviesCardList.js).
+- [x] Реализована хотя бы одна [форма](src/components/Register/Register.js).
+- [] Есть применение Контекст API: не выполнен.
+- [x] Есть применение предохранителя: [ProtectedRoute](src/components/ProtectedRoute/ProtectedRoute.jsx).
+- [x] Есть хотя бы один кастомный хук: [useForm](src/components/hooks/useForm.jsx).
+- [x] Хотя бы несколько компонентов используют PropTypes: [MoviesCardList](src/components/MoviesCardList/MoviesCardList.js), [ProtectedRoute](src/components/ProtectedRoute/ProtectedRoute.jsx).
+- [x] Поиск не должен триггерить много запросов к серверу ([debounce](src/components/SearchForm/SearchForm.jsx)).
+- [x] Есть применение [lazy + Suspense](src/components/App/App.js).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Redux
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [x] Используем Modern Redux with Redux Toolkit: [store](src/utils/store/store.js).
+- [x] Используем слайсы: [userSlise](src/utils/store/slices/userslice.js).
+- [] Есть хотя бы одна кастомная мидлвара: не выполнен.
+- [x] Используется RTK Query: [movies](src/utils/store/query/movies.js), [user](src/utils/store/query/user.js).
+- [x] Используется Transforming Responses: [user](src/utils/store/query/user.js).
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 2 уровень (необязательный)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [x] Настроен CI/CD: [main.yml](.github/workflows/main.yml).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
