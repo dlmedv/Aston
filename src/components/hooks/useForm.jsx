@@ -27,7 +27,7 @@ const useForm = (initialState) => {
     });
   };
 
-  return { form, errors, handleChange,clearError };
+  return { form, errors, handleChange, clearError };
 };
 
 export default useForm;

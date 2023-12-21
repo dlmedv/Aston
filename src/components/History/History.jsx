@@ -4,11 +4,10 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 
 import { setSearchStr } from "../../utils/store/slices/filmslice";
+import { getSearchedFilms, setSearchedFilms } from "../../utils/const/const";
 
 function History() {
-  const [searchFilms, setSearchFilms] = useState(
-    JSON.parse(localStorage.getItem("searchedFilms")) || []
-  );
+  const [searchFilms, setSearchFilms] = useState(getSearchedFilms);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,9 +17,9 @@ function History() {
   }
 
   function delHistory(film) {
-    const arrSearch = JSON.parse(localStorage.getItem("searchedFilms")) || [];
+    const arrSearch = getSearchedFilms;
     arrSearch.splice(arrSearch.indexOf(film), 1);
-    localStorage.setItem("searchedFilms", JSON.stringify(arrSearch));
+    setSearchedFilms("searchedFilms", arrSearch);
     setSearchFilms(arrSearch);
   }
 

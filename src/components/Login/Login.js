@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useAuthorizeMutation } from "../../utils/store/query/user";
 import useForm from "../hooks/useForm";
 import logo from "../../images/logo.svg";
-import { patternEmail } from "../../utils/const/const";
+import { patternEmail, nameCookie } from "../../utils/const/const";
 import { setLoggetIn } from "../../utils/store/slices/userslice";
 import { setCookie } from "../../utils/store/cookie/cookie";
 
@@ -39,7 +39,7 @@ function Login() {
       });
       clearError();
       dispatch(setLoggetIn());
-      setCookie("jwt", data.token, { expires: 7 });
+      setCookie(nameCookie, data.token, { expires: 7 });
       navigate("/movies");
     } catch (error) {
       console.error(error);
