@@ -41,8 +41,8 @@ function Login() {
       dispatch(setLoggetIn());
       setCookie("jwt", data.token, { expires: 7 });
       navigate("/movies");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 

@@ -37,8 +37,8 @@ function Register() {
         password: form.password,
       });
       navigate("/signin");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
