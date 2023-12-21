@@ -28,7 +28,7 @@
 - [x] Есть разделение на [умные](src/components/MoviesCardList/MoviesCardList.js) и [глупые](src/components/Promo/Promo.js) компоненты.
 - [x] Есть рендеринг [списков](src/components/MoviesCardList/MoviesCardList.js).
 - [x] Реализована хотя бы одна [форма](src/components/Register/Register.js).
-- [] Есть применение Контекст API: не выполнен.
+- [ ] Есть применение Контекст API: не выполнен.
 - [x] Есть применение предохранителя: [ProtectedRoute](src/components/ProtectedRoute/ProtectedRoute.jsx).
 - [x] Есть хотя бы один кастомный хук: [useForm](src/components/hooks/useForm.jsx).
 - [x] Хотя бы несколько компонентов используют PropTypes: [MoviesCardList](src/components/MoviesCardList/MoviesCardList.js), [ProtectedRoute](src/components/ProtectedRoute/ProtectedRoute.jsx).
@@ -39,7 +39,7 @@
 
 - [x] Используем Modern Redux with Redux Toolkit: [store](src/utils/store/store.js).
 - [x] Используем слайсы: [userSlise](src/utils/store/slices/userslice.js).
-- [] Есть хотя бы одна кастомная мидлвара: не выполнен.
+- [ ] Есть хотя бы одна кастомная мидлвара: не выполнен.
 - [x] Используется RTK Query: [movies](src/utils/store/query/movies.js), [user](src/utils/store/query/user.js).
 - [x] Используется Transforming Responses: [user](src/utils/store/query/user.js).
 
