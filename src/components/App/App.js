@@ -5,6 +5,7 @@ import { lazy, Suspense } from "react";
 
 import Preloader from "../Preloader/Preloader";
 import Header from "../Header/Header";
+import { ColorProvider } from "../context/ColorContext";
 
 const Main = lazy(() => import("../Main/Main"));
 const Movies = lazy(() => import("../Movies/Movies"));
@@ -21,14 +22,13 @@ function App() {
   return (
     <div className="app">
       <div className="app__container">
-        <Header />
+        <ColorProvider>
+          <Header />
+        </ColorProvider>
         <Suspense fallback={<Preloader />}>
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route
-              path="/movies"
-              element={<ProtectedRoute element={<Movies />} />}
-            />
+            <Route path="/movies" element={<Movies />} />
             <Route
               path="/saved-movies"
               element={<ProtectedRoute element={<SavedMovies />} />}
@@ -39,7 +39,15 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<ProtectedRoute element={<Profile />} />}
+              element={
+                <ProtectedRoute
+                  element={
+                    <ColorProvider>
+                      <Profile />
+                    </ColorProvider>
+                  }
+                />
+              }
             />
             <Route
               path="/history"

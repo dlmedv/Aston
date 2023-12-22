@@ -100,9 +100,9 @@ function Register() {
             />
           </div>
           <span className="auth__form-error">{errors.password}</span>
-          <span className="auth__form-error auth__form-error_reg">
+          {/* <span className="auth__form-error auth__form-error_reg">
             {isError ? error.data.message : ""}
-          </span>
+          </span> */}
           <button
             className={
               buttonStatus

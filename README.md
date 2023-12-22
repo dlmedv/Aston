@@ -1,6 +1,5 @@
 # aston-project
 
-[![Actions](https://github.com/Ewok1ng/aston-project/actions/workflows/actions.yml/badge.svg)](https://github.com/dlmedv/aston/actions)
 - Movies - приложение для поиска и просмотра фильмов.
 - Использованное API: [Beatfilm-movies](https://api.nomoreparties.co/beatfilm-movies").
 
@@ -28,8 +27,8 @@
 - [x] Есть разделение на [умные](src/components/MoviesCardList/MoviesCardList.js) и [глупые](src/components/Promo/Promo.js) компоненты.
 - [x] Есть рендеринг [списков](src/components/MoviesCardList/MoviesCardList.js).
 - [x] Реализована хотя бы одна [форма](src/components/Register/Register.js).
-- [ ] Есть применение Контекст API: не выполнен.
-- [x] Есть применение предохранителя: [ProtectedRoute](src/components/ProtectedRoute/ProtectedRoute.jsx).
+- [x] Есть применение Контекст API: [ColorContext](src/components/context/ColorContext.jsx) используется в [Header](src/components/Header/Header.js),[Profile](src/components/Profile/Profile.js).
+- [x] Есть применение предохранителя: [ErrorBoundary](src/components/Movies/Movies.js).
 - [x] Есть хотя бы один кастомный хук: [useForm](src/components/hooks/useForm.jsx).
 - [x] Хотя бы несколько компонентов используют PropTypes: [MoviesCardList](src/components/MoviesCardList/MoviesCardList.js), [ProtectedRoute](src/components/ProtectedRoute/ProtectedRoute.jsx).
 - [x] Поиск не должен триггерить много запросов к серверу ([debounce](src/components/SearchForm/SearchForm.jsx)).
@@ -39,13 +38,7 @@
 
 - [x] Используем Modern Redux with Redux Toolkit: [store](src/utils/store/store.js).
 - [x] Используем слайсы: [userSlise](src/utils/store/slices/userslice.js).
-- [ ] Есть хотя бы одна кастомная мидлвара: не выполнен.
+- [x] Есть хотя бы одна кастомная мидлвара: [loginLoggerMiddleware](src/utils/store/middleware/loginLoggerMiddleware.js).
 - [x] Используется RTK Query: [movies](src/utils/store/query/movies.js), [user](src/utils/store/query/user.js).
 - [x] Используется Transforming Responses: [user](src/utils/store/query/user.js).
-
----
-
-### 2 уровень (необязательный)
-
-- [x] Настроен CI/CD: [main.yml](.github/workflows/main.yml).
 

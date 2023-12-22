@@ -6,6 +6,7 @@ import { moviesApi } from "./query/movies";
 import { userApi } from "./query/user";
 import filmSlice from "./slices/filmslice";
 import userSlice from "./slices/userslice";
+import loginLoggerMiddleware from "./middleware/loginLoggerMiddleware";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(
       moviesApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+      loginLoggerMiddleware
     );
   },
 });

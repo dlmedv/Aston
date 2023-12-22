@@ -3,6 +3,7 @@ import { Route, Routes, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
+import { useColor } from "../context/ColorContext";
 import { useGetMoviesQuery } from "../../utils/store/query/movies";
 import { getFilms } from "../../utils/store/slices/filmslice";
 import logo from "../../images/logo.svg";
@@ -10,8 +11,8 @@ import logo from "../../images/logo.svg";
 function Header() {
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetMoviesQuery();
-
   const loggetIn = useSelector((state) => state.userSlice.loggetIn);
+  const { color } = useColor();
 
   useEffect(() => {
     if (!error && !isLoading) {
@@ -46,6 +47,12 @@ function Header() {
               </nav>
             ) : (
               <nav className="header__info">
+                <Link
+                  to="/movies"
+                  className=" header__link header__link_sign-up"
+                >
+                  Фильмы
+                </Link>
                 <Link
                   to="/signup"
                   className=" header__link header__link_sign-up"
@@ -116,7 +123,7 @@ function Header() {
       <Route
         path="/profile"
         element={
-          <header className="header header_gray">
+          <header className="header header_gray" style={{ background: color }}>
             <Link to="/">
               <img className="header__logo" src={logo} alt="логотип" />
             </Link>
@@ -131,7 +138,7 @@ function Header() {
                 Сохраненные фильмы
               </Link>
               <Link to="/profile" className="header__link-account">
-                <p className="header__link header__link_gray">Аккаунт </p>
+                <p className="header__link header__link_gray">Аккаунт</p>
                 <div className="header__link-icon"></div>
               </Link>
             </nav>

@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
+import { useColor } from "../context/ColorContext";
+
 import {
   getUserInfo,
   setLoggetIn,
@@ -13,9 +15,9 @@ import { useGetDataUserQuery } from "../../utils/store/query/user";
 function Profile() {
   const user = useSelector((state) => state.userSlice);
   const { data } = useGetDataUserQuery({}, { refetchOnMountOrArgChange: true });
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { color } = useColor();
 
   useEffect(() => {
     if (data) {
@@ -30,7 +32,7 @@ function Profile() {
   }
   return (
     <main>
-      <section className="profile">
+      <section className="profile" style={{ background: color }}>
         <div className="profile__wrapper">
           <h1 className="profile__title">Привет, {user.name}!</h1>
           <div className="profile__form">
@@ -42,11 +44,7 @@ function Profile() {
               <Link to="/history" className="profile__button">
                 История поиска
               </Link>
-              <Link
-                to="/"
-                onClick={logOut}
-                className="profile__button profile__button_red"
-              >
+              <Link to="/" onClick={logOut} className="profile__button">
                 Выйти из аккаунта
               </Link>
             </div>
