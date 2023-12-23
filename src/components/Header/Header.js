@@ -77,21 +77,44 @@ function Header() {
             <Link to="/">
               <img className="header__logo" src={logo} alt="логотип" />
             </Link>
-            <nav className="header__info">
-              <Link to="/movies" className="header__link header__link_gray">
-                Фильмы
-              </Link>
-              <Link
-                to="/saved-movies"
-                className="header__link header__link_gray"
-              >
-                Сохраненные фильмы
-              </Link>
-              <Link to="/profile" className="header__link-account">
-                <p className="header__link header__link_gray">Аккаунт </p>
-                <div className="header__link-icon"></div>
-              </Link>
-            </nav>
+            {loggetIn ? (
+              <nav className="header__info">
+                <Link to="/movies" className="header__link header__link_gray">
+                  Фильмы
+                </Link>
+                <Link
+                  to="/saved-movies"
+                  className="header__link header__link_gray"
+                >
+                  Сохраненные фильмы
+                </Link>
+                <Link to="/profile" className="header__link-account">
+                  <p className="header__link header__link_gray">Аккаунт </p>
+                  <div className="header__link-icon"></div>
+                </Link>
+              </nav>
+            ) : (
+              <nav className="header__info">
+                <Link
+                  to="/movies"
+                  className=" header__link header__link_sign-up"
+                >
+                  Фильмы
+                </Link>
+                <Link
+                  to="/signup"
+                  className=" header__link header__link_sign-up"
+                >
+                  Регистрация
+                </Link>
+                <Link
+                  to="/signin"
+                  className=" header__link header__link_sign-in"
+                >
+                  Войти
+                </Link>
+              </nav>
+            )}
           </header>
         }
       />
@@ -171,27 +194,50 @@ function Header() {
         }
       />
       <Route
-        path="movies/:movieId"
+        path="movies/:id"
         element={
           <header className="header header_gray">
             <Link to="/">
               <img className="header__logo" src={logo} alt="логотип" />
             </Link>
-            <nav className="header__info">
-              <Link to="/movies" className="header__link header__link_gray">
-                Фильмы
-              </Link>
-              <Link
-                to="/saved-movies"
-                className="header__link header__link_gray"
-              >
-                Сохраненные фильмы
-              </Link>
-              <Link to="/profile" className="header__link-account">
-                <p className="header__link header__link_gray">Аккаунт </p>
-                <div className="header__link-icon"></div>
-              </Link>
-            </nav>
+            {loggetIn ? (
+              <nav className="header__info">
+                <Link to="/movies" className="header__link header__link_gray">
+                  Фильмы
+                </Link>
+                <Link
+                  to="/saved-movies"
+                  className="header__link header__link_gray"
+                >
+                  Сохраненные фильмы
+                </Link>
+                <Link to="/profile" className="header__link-account">
+                  <p className="header__link header__link_gray">Аккаунт </p>
+                  <div className="header__link-icon"></div>
+                </Link>
+              </nav>
+            ) : (
+              <nav className="header__info">
+                <Link
+                  to="/movies"
+                  className=" header__link header__link_sign-up"
+                >
+                  Фильмы
+                </Link>
+                <Link
+                  to="/signup"
+                  className=" header__link header__link_sign-up"
+                >
+                  Регистрация
+                </Link>
+                <Link
+                  to="/signin"
+                  className=" header__link header__link_sign-in"
+                >
+                  Войти
+                </Link>
+              </nav>
+            )}
           </header>
         }
       />

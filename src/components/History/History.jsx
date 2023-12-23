@@ -1,17 +1,14 @@
 import "./History.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { useState } from "react";
 
-import { setSearchStr } from "../../utils/store/slices/filmslice";
 import {
-  getSearchedFilms,
+  setSearchStr,
   setSearchedFilms,
-  getFilms,
-} from "../../utils/const/const";
+} from "../../utils/store/slices/filmslice";
 
 function History() {
-  const [searchFilms, setSearchFilms] = useState(getFilms);
+  const searchFilms = useSelector((state) => state.filmSlice.history);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,10 +18,9 @@ function History() {
   }
 
   function delHistory(film) {
-    const arrSearch = getSearchedFilms;
-    arrSearch.splice(arrSearch.indexOf(film), 1);
-    setSearchedFilms("searchedFilms", arrSearch);
-    setSearchFilms(arrSearch);
+    dispatch(
+      setSearchedFilms([...searchFilms.filter((item) => item !== film)])
+    );
   }
 
   return (

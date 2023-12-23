@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
-import { searchFilm, nullSearchFilm } from "../../utils/store/slices/filmslice";
+import {
+  searchFilm,
+  nullSearchFilm,
+  setSearchedFilms,
+} from "../../utils/store/slices/filmslice";
 import { useDebounce } from "../hooks/useDebounce";
 import "./SearchForm.css";
 
@@ -16,6 +20,7 @@ function SearchForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const debouncedInput = useDebounce(input, 500);
+  const searchedFilm = useSelector((state) => state.filmSlice.history);
 
   useEffect(() => {
     if (Object.entries(activeFilm).length === 0) {
@@ -50,9 +55,8 @@ function SearchForm() {
         item.nameRU.toLowerCase() === input.toLowerCase()
     );
     setActiveFilm(find ? find : {});
-    const arrSearch = JSON.parse(localStorage.getItem("searchedFilms")) || [];
-    arrSearch.push(input.split(" // ")[0]);
-    localStorage.setItem("searchedFilms", JSON.stringify(arrSearch));
+    const str = input.split(" // ")[0];
+    dispatch(setSearchedFilms([...searchedFilm, str]));
     if (!errMessage) {
       navigate(`/movies/${activeFilm.id}`);
     }

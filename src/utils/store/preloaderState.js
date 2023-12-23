@@ -3,6 +3,7 @@ const preloaderStateFilm = () => {
     films: JSON.parse(localStorage.getItem("films")) || [],
     searchFilms: [],
     searchStr: JSON.parse(localStorage.getItem("search")) || [],
+    history : JSON.parse(localStorage.getItem("searchedFilms")) || []
   };
 
   return filmState;

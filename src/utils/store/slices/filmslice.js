@@ -7,11 +7,9 @@ export const filmSlice = createSlice({
   initialState,
   reducers: {
     getFilms: (state, action) => {
-      localStorage.setItem("films", JSON.stringify(action.payload));
       state.films = action.payload;
     },
     searchFilm: (state, action) => {
-      localStorage.setItem("search", JSON.stringify(action.payload));
       state.searchFilms = state.films.filter(
         (item) =>
           item.nameRU.toLowerCase().includes(action.payload.toLowerCase()) ||
@@ -24,9 +22,17 @@ export const filmSlice = createSlice({
     setSearchStr: (state, action) => {
       state.searchStr = action.payload;
     },
+    setSearchedFilms: (state, action) => {
+      state.history = action.payload;
+    },
   },
 });
 
 export default filmSlice.reducer;
-export const { getFilms, searchFilm, nullSearchFilm, setSearchStr } =
-  filmSlice.actions;
+export const {
+  getFilms,
+  searchFilm,
+  nullSearchFilm,
+  setSearchStr,
+  setSearchedFilms,
+} = filmSlice.actions;
