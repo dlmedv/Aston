@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import { getSavedFilms } from "../../utils/store/slices/userslice";
-import { useSavedMoviesMutation } from "../../utils/store/query/user";
+import {
+  useSavedMoviesMutation,
+  useDeleteMoviesMutation,
+} from "../../utils/store/query/user";
 
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
@@ -13,16 +16,24 @@ function Movie() {
   const params = useParams();
   const films = useSelector((state) => state.filmSlice.films);
   const [saveMovie] = useSavedMoviesMutation();
+  const [removeMovie] = useDeleteMoviesMutation();
   const [film, setFilm] = useState({ image: "", nameRU: "" });
   const user = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
-  const [isAddFilm, setIsAddFilm] = useState(true);
+
   const loggedIn = useSelector((state) => state.userSlice.loggetIn);
 
   function actionSavedFilms() {
     saveMovie(film).then(() => {
       dispatch(getSavedFilms(user.savedFilms.concat(film)));
-      setIsAddFilm(false);
+    });
+  }
+
+  function handleRemoveFilms() {
+    removeMovie({ id: film.id }).then(() => {
+      dispatch(
+        getSavedFilms(user.savedFilms.filter((item) => item.id !== film.id))
+      );
     });
   }
 
@@ -31,12 +42,6 @@ function Movie() {
       setFilm(films.find((item) => item.id == params.id));
     }
   }, [films]);
-
-  useEffect(() => {
-    if (film && user.savedFilms) {
-      setIsAddFilm(!user.savedFilms.find((item) => item.id === film.id));
-    }
-  }, [film]);
 
   if (!films.length) {
     return <Preloader />;
@@ -65,10 +70,18 @@ function Movie() {
             </div>
           </div>
           <p className="movie__description">{film.description}</p>
-          {isAddFilm && loggedIn ? (
-            <button onClick={actionSavedFilms} className="movie__button">
-              Сохранить фильм
-            </button>
+          {loggedIn ? (
+            <>
+              <button onClick={actionSavedFilms} className="movie__button">
+                Сохранить фильм
+              </button>
+              <button
+                onClick={handleRemoveFilms}
+                className="movie__button_del movie__button"
+              >
+                Удалить фильм
+              </button>
+            </>
           ) : (
             <> </>
           )}

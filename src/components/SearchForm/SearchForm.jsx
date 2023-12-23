@@ -22,6 +22,10 @@ function SearchForm() {
   const debouncedInput = useDebounce(input, 500);
   const searchedFilm = useSelector((state) => state.filmSlice.history);
 
+  function handleInputBlur() {
+    dispatch(nullSearchFilm());
+  }
+
   useEffect(() => {
     if (Object.entries(activeFilm).length === 0) {
       setErrMesage(true);
@@ -71,6 +75,7 @@ function SearchForm() {
           className="search-form__input"
           value={input}
           onInput={inputChange}
+          onBlur={handleInputBlur}
           required
         />
         <button disabled={errMessage} className="search-form__button">
