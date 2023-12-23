@@ -2,21 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { deleteCookie } from "../cookie/cookie";
 
-const user = JSON.parse(localStorage.getItem("userInfo"));
-
-const initialState = {
-  name: user ? user.name : "",
-  email: user ? user.email : "",
-  loggetIn: JSON.parse(localStorage.getItem("loggedIn")) || false,
-  savedFilms: JSON.parse(localStorage.getItem("savedFilms")) || [],
-};
+const initialState = {};
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     getUserInfo: (state, action) => {
-      localStorage.setItem("userInfo", JSON.stringify(action.payload));
       state.name = action.payload.name;
       state.email = action.payload.email;
     },
@@ -29,11 +21,12 @@ export const userSlice = createSlice({
       state.savedFilms = [];
     },
     setLoggetIn: (state) => {
-      localStorage.setItem("loggedIn", JSON.stringify(!state.loggetIn));
-      state.loggetIn = !state.loggetIn;
+      state.loggetIn = true;
+    },
+    setLogOut: (state) => {
+      state.loggetIn = false;
     },
     getSavedFilms: (state, action) => {
-      localStorage.setItem("savedFilms", JSON.stringify(action.payload));
       state.savedFilms = action.payload;
     },
   },
@@ -47,4 +40,5 @@ export const {
   getSavedFilms,
   clearUserData,
   removeSavedFilm,
+  setLogOut,
 } = userSlice.actions;

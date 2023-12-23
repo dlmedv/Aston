@@ -17,6 +17,7 @@ function Movie() {
   const user = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const [isAddFilm, setIsAddFilm] = useState(true);
+  const loggedIn = useSelector((state) => state.userSlice.loggetIn);
 
   function actionSavedFilms() {
     saveMovie(film).then(() => {
@@ -64,7 +65,7 @@ function Movie() {
             </div>
           </div>
           <p className="movie__description">{film.description}</p>
-          {isAddFilm ? (
+          {isAddFilm && loggedIn ? (
             <button onClick={actionSavedFilms} className="movie__button">
               Сохранить фильм
             </button>

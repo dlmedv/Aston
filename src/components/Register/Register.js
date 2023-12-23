@@ -28,18 +28,21 @@ function Register() {
     setButtonStatus(err);
   }, [errors]);
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    try {
-      await registry({
-        name: form.name,
-        email: form.email,
-        password: form.password,
+    registry({
+      name: form.name,
+      email: form.email,
+      password: form.password,
+    })
+      .then(({ error }) => {
+        if (!error) {
+          navigate("/signin");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
       });
-      navigate("/signin");
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
@@ -100,9 +103,9 @@ function Register() {
             />
           </div>
           <span className="auth__form-error">{errors.password}</span>
-          {/* <span className="auth__form-error auth__form-error_reg">
+          <span className="auth__form-error auth__form-error_reg">
             {isError ? error.data.message : ""}
-          </span> */}
+          </span>
           <button
             className={
               buttonStatus

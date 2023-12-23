@@ -59,7 +59,7 @@ export const userApi = createApi({
           image: `https://api.nomoreparties.co/${req.image.url}`,
           trailerLink: req.trailerLink,
           thumbnail: `https://api.nomoreparties.co/${req.image.formats.thumbnail.url}`,
-          movieId: req.id,
+          id: req.id,
           nameRU: req.nameRU,
           nameEN: req.nameEN,
         },

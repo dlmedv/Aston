@@ -6,3 +6,5 @@ export const getSearchedFilms =
 export function setSearchedFilms(name, value) {
   localStorage.setItem(name, JSON.stringify(value));
 }
+
+export const getFilms = JSON.parse(localStorage.getItem("searchedFilms")) || [];

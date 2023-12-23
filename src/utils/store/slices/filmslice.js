@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  films: JSON.parse(localStorage.getItem("films")) || [],
-  searchFilms: [],
-  searchStr: JSON.parse(localStorage.getItem("search")) || [],
-};
+const initialState = {};
 
 export const filmSlice = createSlice({
   name: "film",

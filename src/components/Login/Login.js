@@ -30,20 +30,23 @@ function Login() {
     setButtonStatus(err);
   }, [errors]);
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    try {
-      const { data } = await authorize({
-        email: form.email,
-        password: form.password,
+    authorize({
+      email: form.email,
+      password: form.password,
+    })
+      .then(({ data }) => {
+        if (!data.error) {
+          clearError();
+          dispatch(setLoggetIn());
+          setCookie(nameCookie, data.token, { expires: 7 });
+          navigate("/movies");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
       });
-      clearError();
-      dispatch(setLoggetIn());
-      setCookie(nameCookie, data.token, { expires: 7 });
-      navigate("/movies");
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (

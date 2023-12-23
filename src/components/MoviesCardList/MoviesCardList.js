@@ -11,19 +11,24 @@ import { useGetSavedMoviesQuery } from "../../utils/store/query/user";
 import { getSavedFilms } from "../../utils/store/slices/userslice";
 
 function MoviesCardList({ isSavedMoviesPage }) {
+  const loggedIn = useSelector((state) => state.userSlice.loggetIn);
   const films = useSelector((state) => state.filmSlice.films);
   const userFilms = useSelector((state) => state.userSlice.savedFilms);
   const dispatch = useDispatch();
   const { data } = useGetSavedMoviesQuery(
     {},
-    { refetchOnMountOrArgChange: true }
+    {
+      skip: !loggedIn,
+      refetchOnMountOrArgChange: true,
+    }
   );
+
   useEffect(() => {
-    if (data) {
+    if (loggedIn && data) {
       dispatch(getSavedFilms(data));
     }
-  }, [data]);
-  
+  }, [loggedIn, data]);
+
   if (!films.length) {
     return <Preloader />;
   }

@@ -33,10 +33,7 @@ function App() {
               path="/saved-movies"
               element={<ProtectedRoute element={<SavedMovies />} />}
             />
-            <Route
-              path="/movies/:id"
-              element={<ProtectedRoute element={<Movie />} />}
-            />
+            <Route path="/movies/:id" element={<Movie />} />
             <Route
               path="/profile"
               element={

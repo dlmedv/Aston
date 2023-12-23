@@ -4,10 +4,14 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 
 import { setSearchStr } from "../../utils/store/slices/filmslice";
-import { getSearchedFilms, setSearchedFilms } from "../../utils/const/const";
+import {
+  getSearchedFilms,
+  setSearchedFilms,
+  getFilms,
+} from "../../utils/const/const";
 
 function History() {
-  const [searchFilms, setSearchFilms] = useState(getSearchedFilms);
+  const [searchFilms, setSearchFilms] = useState(getFilms);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

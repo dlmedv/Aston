@@ -7,8 +7,8 @@ import { useColor } from "../context/ColorContext";
 
 import {
   getUserInfo,
-  setLoggetIn,
   clearUserData,
+  setLogOut,
 } from "../../utils/store/slices/userslice";
 import { useGetDataUserQuery } from "../../utils/store/query/user";
 
@@ -26,7 +26,7 @@ function Profile() {
   }, [data, user]);
 
   function logOut() {
-    dispatch(setLoggetIn());
+    dispatch(setLogOut());
     dispatch(clearUserData());
     navigate("/", { replace: true });
   }

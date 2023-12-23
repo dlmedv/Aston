@@ -15,16 +15,15 @@ function MoviesCard({ movie, isSavedMoviesPage }) {
   const [deleteMovie] = useDeleteMoviesMutation();
   const user = useSelector((state) => state.userSlice);
   const films = useSelector((state) => state.userSlice.savedFilms);
+  const loggedIn = useSelector((state) => state.userSlice.loggetIn);
   const dispatch = useDispatch();
-  const [isSaved, setIsSaved] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
 
   function clickMore() {
-    navigate(`/movies/${isSavedMoviesPage ? movie.movieId : movie.id}`);
+    navigate(`/movies/${movie.id}`);
   }
   useEffect(() => {
-    const bool = films.some(
-      (item) => item.movieId == movie.id || item.id == movie.id
-    );
+    const bool = films.some((item) => item.id == movie.id);
     setIsSaved(bool);
   }, []);
 
@@ -47,11 +46,9 @@ function MoviesCard({ movie, isSavedMoviesPage }) {
 
   async function handleDelete() {
     try {
-      await deleteMovie({ id: movie.movieId });
+      await deleteMovie({ id: movie.id });
       dispatch(
-        getSavedFilms(
-          user.savedFilms.filter((item) => item.movieId !== movie.movieId)
-        )
+        getSavedFilms(user.savedFilms.filter((item) => item.id !== movie.id))
       );
       setIsSaved(false);
     } catch (error) {
@@ -67,20 +64,24 @@ function MoviesCard({ movie, isSavedMoviesPage }) {
           {Math.floor(movie.duration / 60)}ч{" "}
           {movie.duration - 60 * Math.floor(movie.duration / 60)}м
         </p>
-        {isSavedMoviesPage ? (
-          <button
-            onClick={handleDelete}
-            className="movies-card__button movies-card__button_delete"
-            type="button"
-          ></button>
-        ) : (
-          <button
-            onClick={handleSave}
-            className={`movies-card__button ${
-              isSaved ? "movies-card__button_active" : ""
-            }`}
-            type="button"
-          ></button>
+        {loggedIn && (
+          <>
+            {isSavedMoviesPage ? (
+              <button
+                onClick={handleDelete}
+                className="movies-card__button movies-card__button_delete"
+                type="button"
+              ></button>
+            ) : (
+              <button
+                onClick={handleSave}
+                className={`movies-card__button ${
+                  isSaved ? "movies-card__button_active" : ""
+                }`}
+                type="button"
+              ></button>
+            )}
+          </>
         )}
         <button className="movies-card__more" type="button" onClick={clickMore}>
           Подробнее...

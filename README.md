@@ -38,7 +38,7 @@
 
 - [x] Используем Modern Redux with Redux Toolkit: [store](src/utils/store/store.js).
 - [x] Используем слайсы: [userSlise](src/utils/store/slices/userslice.js).
-- [x] Есть хотя бы одна кастомная мидлвара: [loginLoggerMiddleware](src/utils/store/middleware/loginLoggerMiddleware.js).
+- [x] Есть хотя бы одна кастомная мидлвара: [userMiddleware](src/utils/store/middleware/userMiddleware.js).
 - [x] Используется RTK Query: [movies](src/utils/store/query/movies.js), [user](src/utils/store/query/user.js).
 - [x] Используется Transforming Responses: [user](src/utils/store/query/user.js).
 
