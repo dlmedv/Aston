@@ -24,19 +24,23 @@ function Movie() {
   const loggedIn = useSelector((state) => state.userSlice.loggetIn);
 
   function actionSavedFilms() {
-    saveMovie(film).then(() => {
-      dispatch(getSavedFilms(user.savedFilms.concat(film)));
-      setIsAddFilm(false);
-    });
+    saveMovie(film)
+      .then(() => {
+        dispatch(getSavedFilms(user.savedFilms.concat(film)));
+        setIsAddFilm(false);
+      })
+      .catch((error) => console.error(error));
   }
 
   function handleRemoveFilms() {
-    removeMovie({ id: film.id }).then(() => {
-      dispatch(
-        getSavedFilms(user.savedFilms.filter((item) => item.id !== film.id))
-      );
-      setIsAddFilm(true);
-    });
+    removeMovie({ id: film.id })
+      .then(() => {
+        dispatch(
+          getSavedFilms(user.savedFilms.filter((item) => item.id !== film.id))
+        );
+        setIsAddFilm(true);
+      })
+      .catch((error) => console.error(error));
   }
 
   useEffect(() => {
@@ -83,10 +87,7 @@ function Movie() {
               Сохранить фильм
             </button>
           ) : (
-            <button
-              onClick={handleRemoveFilms}
-              className="movie__button"
-            >
+            <button onClick={handleRemoveFilms} className="movie__button">
               Удалить фильм
             </button>
           )}
